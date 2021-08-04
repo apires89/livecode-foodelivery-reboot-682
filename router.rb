@@ -1,9 +1,10 @@
 require "byebug"
 class Router
-  def initialize(meals_controller,customers_controller,sessions_controller)
+  def initialize(meals_controller,customers_controller,sessions_controller, orders_controller)
     @meals_controller = meals_controller
     @customers_controller = customers_controller
     @sessions_controller = sessions_controller
+    @orders_controller = orders_controller
     @running = true
   end
 
@@ -43,6 +44,8 @@ class Router
     puts "2- Add a new meal"
     puts "3 - List all customers"
     puts "4 - Add a new customer"
+    puts "5 - List undeliverd orders"
+    puts "6 - Add a new order"
     puts "7 - Logout"
     puts "8 - Quit"
     print "> "
@@ -68,6 +71,8 @@ class Router
     when 2 then @meals_controller.create
     when 3 then @customers_controller.list
     when 4 then @customers_controller.create
+    when 5 then @orders_controller.list_undelivered_orders
+    when 6 then @orders_controller.add
     when 7 then logout!
     when 8 then stop!
     else
@@ -77,8 +82,8 @@ class Router
 
   def rider_action(choice)
     case choice
-    when 1 then puts "TODO"
-    when 2 then puts "TODO"
+    when 1 then puts @orders_controller.list_my_undelivered_orders(@current_user)
+    when 2 then puts @orders_controller.mark_as_delivered(@current_user)
     when 3 then logout!
     when 4 then stop!
     else

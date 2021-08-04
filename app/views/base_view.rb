@@ -9,5 +9,4 @@ class BaseView
     puts "What is the #{input}?"
     gets.chomp
   end
-
 end
